@@ -9,7 +9,7 @@ from kivy.uix.textinput import TextInput
 # Password (TestInput)
 # Sign in  (Button)
 # Create Account (Button)
-class HomePage(Widget):
+class Login(Widget):
     pass
 
 # Welcome (Label)
@@ -24,7 +24,7 @@ class CreateAccount(Widget):
 
 class TransitApp(App):
     def build(self):
-        return HomePage()
+        return Login()
 
 
 if __name__ == '__main__':
