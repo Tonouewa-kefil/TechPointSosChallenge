@@ -1,4 +1,6 @@
+# Login screen assets
 <Login>:
+    # Username text field
     TextInput:
         font_size: 17
         size: root.width * 0.504, root.height * 0.05
@@ -6,12 +8,14 @@
         top: root.top - (root.top * 0.28)
         text:"Username"
 
+    # Password text field
     TextInput:
         font_size: 17
         size: root.width * 0.504, root.height * 0.05
         center_x: root.center_x
         top: root.top - (root.top * 0.37)
         text:"Password"
+        password = true
 
     Button:
         font_size: 13
@@ -20,6 +24,9 @@
         top:root.top - (root.top * 0.47)
         text:"Sign in"
         background_color:(0.2,0.6,1,1)
+
+        # When pressed, switch to the CreateAccount screen
+        on_press: root.manager.current = 'CreateAccount'
 
     Button:
         font_size: 17
@@ -36,6 +43,9 @@
         top:root.top - (root.top * 0.1)
         size: root.width * 0.031, root.height * 0.04
         background_color:(0,0,0,1)
+
+        # When pressed, switch to the Login screen
+        on_press: root.manager.current = 'Login'
 
     Label:
         text:"Welcome!"
