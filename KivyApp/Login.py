@@ -34,13 +34,12 @@ class Login(Screen):
 class CreateAccount(Screen):
     pass
 
-# Create the screen manager
-sm = ScreenManager()
-sm.add_widget(Login(name='Login'))
-sm.add_widget(CreateAccount(name='CreateAccount'))
-
 class TransitApp(App):
     def build(self):
+        # Create the screen manager
+        sm = ScreenManager()
+        sm.add_widget(Login(name='Login'))
+        sm.add_widget(CreateAccount(name='CreateAccount'))
         return sm
 
 if __name__ == '__main__':
