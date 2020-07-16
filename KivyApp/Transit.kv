@@ -1,80 +1,218 @@
-<Login>:
-    TextInput:
-        font_size: 17
-        size: root.width * 0.504, root.height * 0.05
-        center_x: root.center_x
-        top: root.top - (root.top * 0.28)
-        text:"Username"
 
-    TextInput:
-        font_size: 17
-        size: root.width * 0.504, root.height * 0.05
-        center_x: root.center_x
-        top: root.top - (root.top * 0.37)
-        text:"Password"
+TransitionAppManagement:
+    #HomeScreen:
+    #CreateAccountScreen:
+    #TransportationHistoryScreen:
+    ItemDescriptionScreen:
 
-    Button:
-        font_size: 13
-        size: root.width * 0.31, root.height * 0.035
-        center_x: root.center_x
-        top:root.top - (root.top * 0.47)
-        text:"Sign in"
-        background_color:(0.2,0.6,1,1)
 
-    Button:
-        font_size: 17
-        size: root.width * 0.504, root.height * 0.05
-        center_x:root.center_x
-        top:root.top - (root.top * 0.74)
-        text:"Create Account"
+<HomeScreen>:
+    name:"Home"
+    username: username
+    password: password
+    sign_in:  sign_in
+    create_account: create_account
 
-<CreateAccount>:
-    Button:
-        text:"<"
-        font_size: 30
-        center_x:  (root.width * 0.0613)
-        top:root.top - (root.top * 0.1)
-        size: root.width * 0.031, root.height * 0.04
-        background_color:(0,0,0,1)
+    FloatLayout:
+        #verified
+        TextInput:
+            id: username
+            font_size: root.height * 0.025
+            size_hint: 0.504,0.05
+            pos_hint:{"top":0.72,"x":0.255}
+            text:"Username"
+            multiline: False
+        #verified
+        TextInput:
+            id: password
+            font_size: root.height * 0.025
+            size_hint: 0.504,0.05
+            pos_hint:{"top":0.63,"x":0.255}
+            text:"Password"
+            multiline: False
+        #verified
+        Button:
+            id: sign_in
+            font_size: 13
+            size_hint:0.31,0.035
+            pos_hint:{"top":0.53,"x":0.345}
+            text:"Sign in"
+            background_color:(0,0,0,1)
+            on_release:
+                root.signing_in()
+        #verified
+        Button:
+            id: create_account
+            font_size: root.height * 0.025
+            size_hint: 0.54,0.05
+            pos_hint:{"top":0.26,"x":0.255}
+            text:"Create Account"
+            background_color:(0,0,0,1)
+            on_release:
+                app.root.current = "Create"
+                root.manager.transition.direction = 'left'
 
-    Label:
-        text:"Welcome!"
-        font_size: 30
-        center_x: root.center_x
-        top: root.top - (root.top * 0.12)
-    Label:
-        text:"Thanks for helping to \n keep transportation in our city safe"
-        font_size: 15
-        center_x: root.center_x
-        top: root.top - (root.top * 0.19)
-        halign: 'center'
-        valign: 'middle'
-    Label:
-        text:"Let's get your Account set up..."
-        font_size: 17
-        center_x: root.center_x
-        top: root.top - (root.top * 0.40)
-    TextInput:
-        font_size: 17
-        size: root.width * 0.504, root.height * 0.05
-        center_x: root.center_x
-        top: root.top - (root.top * 0.62)
-        text:"Username"
-    TextInput:
-        font_size: 17
-        size: root.width * 0.504, root.height * 0.05
-        center_x: root.center_x
-        top: root.top - (root.top * 0.69)
-        text:"Password"
-    TextInput:
-        font_size: 17
-        size: root.width * 0.504, root.height * 0.05
-        center_x: root.center_x
-        top: root.top - (root.top * 0.77)
-        text:"Confirm Password"
-    Button:
-        font_size: 17
-        size: root.width * 0.504, root.height * 0.05
-        center_x:root.center_x
-        top:root.top - (root.top * 0.85)
-        text:"Create!"
+<CreateAccountScreen>:
+    name:"Create"
+    go_back: go_back
+    username: username
+    password: password
+    confirmation: confirmation
+    create: create
+
+    FloatLayout:
+        #verified
+        Button:
+            id: go_back
+            text:"<"
+            font_size: 45
+            pos_hint:{"top":0.97,"x":0.061}
+            size_hint: 0.031,0.04
+            background_color:(0,0,0,0)
+            on_release:
+                app.root.current = "Home"
+                root.manager.transition.direction = 'right'
+        #verified
+        Label:
+            text:"Welcome!"
+            font_size: 30
+            size_hint: 0.35,0.18
+            pos_hint:{"top":0.88,"x":0.32}
+            halign: 'center'
+            valign: 'middle'
+            color: (0,0,0,1)
+        #verified
+        Label:
+            text:"Thanks for helping to \n keep transportation in our city safe"
+            font_size: 15
+            size_hint: 0.66,0.054
+            pos_hint:{"top":0.76,"x":0.171}
+            halign: 'center'
+            valign: 'middle'
+            color: (0,0,0,1)
+        #verified
+        Label:
+            text:"Let's get your Account set up..."
+            font_size: 17
+            size_hint: 0.61,0.04
+            pos_hint:{"top":0.53,"x":0.193}
+            color: (0,0,0,1)
+        #verified
+        TextInput:
+            id: username
+            font_size: root.height * 0.025
+            size_hint:0.504,0.05
+            pos_hint:{"top":0.38,"x":0.22}
+            text:"Username"
+            multiline: False
+        #verified
+        TextInput:
+            id: password
+            font_size: root.height * 0.025
+            size_hint: 0.504, 0.05
+            pos_hint:{"top":0.31,"x":0.22}
+            text:"Password"
+            multiline: False
+        #verified
+        TextInput:
+            id: confirmation
+            font_size: root.height * 0.025
+            size_hint:0.504,0.05
+            pos_hint:{"top":0.24,"x":0.22}
+            text:"Confirm Password"
+            multiline: False
+        #verified
+        Button:
+            id: create
+            font_size: 17
+            size_hint:0.355,0.05
+            pos_hint:{"top":0.15,"x":0.295}
+            text:"Create!"
+            background_color:(0,0,0,1)
+
+<TransportationHistoryScreen>:
+    name:"History"
+    FloatLayout:
+        #verified
+        Button:
+            id: go_back
+            text:"<"
+            font_size: 45
+            pos_hint:{"top":0.97,"x":0.061}
+            size_hint: 0.031,0.04
+            background_color:(0,0,0,0)
+        #verified
+        Label:
+            text:"Recently Used Transportation"
+            font_size: 25
+            size_hint:0.88,0.045
+            pos_hint:{"top":0.89,"x":0.06}
+            color: (0,0,0,1)
+        #verified
+        Button:
+            font_size: 15
+            size_hint:0.69,0.11
+            pos_hint:{"top":0.77,"x":0.16}
+            text:""
+            background_normal:''
+            background_color:(1,1,1,1)
+        #verified
+        Button:
+            font_size: 15
+            size_hint:0.69,0.11
+            pos_hint:{"top":0.573,"x":0.16}
+            text:""
+            background_normal:''
+            background_color:(1,1,1,1)
+        #verified
+        Button:
+            font_size: 15
+            size_hint:0.69,0.11
+            pos_hint:{"top":0.384,"x":0.16}
+            text:""
+            background_normal:''
+            background_color:(1,1,1,1)
+        #verified
+        Button:
+            text:"See more ..."
+            size_hint:0.35,0.0435
+            pos_hint:{"top":0.21,"x":0.33}
+            background_color: (0,0,0,1)
+        #verified
+        Label:
+            text:"If you lost an Item, select the \n transportation to fill a claim"
+            size_hint:0.483,0.051
+            pos_hint:{"top":0.12,"x":0.26}
+            font_size: 14
+            color: (0,0,0,1)
+
+<ItemDescriptionScreen>:
+    name:"LostItem"
+    FloatLayout:
+        Button:
+            id: go_back
+            text:"<"
+            font_size: 45
+            pos_hint:{"top":0.97,"x":0.061}
+            size_hint: 0.031,0.04
+            background_color:(0,0,0,0)
+        Label:
+            text:"Describe your Lost Item"
+            font_size: 25
+        TextInput:
+            text:""
+            font_size: 15
+            multiline: True
+        Label:
+            text:"Best way to contact you?"
+            font_size: 20
+        Button:
+            text:"SMS text"
+            font_size: 20
+        Button:
+            text:"Phone Call"
+            font_call: 20
+        Button:
+            text:"Email"
+            font_call: 20
+
