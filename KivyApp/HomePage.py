@@ -37,6 +37,10 @@ class HomeScreen(Screen):
         self.username.text = ""
         self.password.text = ""
 
+        # If verification is successful, return true
+        #if...
+        return true
+
     def create_new_account(self):
         print("I am here")
 
@@ -57,6 +61,9 @@ class CreateAccountScreen(Screen):
     password: ObjectProperty(None)
     confirmation: ObjectProperty(None)
     create: ObjectProperty(None)
+    pass
+
+class MainScreen(Screen):
     pass
 
 # Recently(Label)
@@ -96,5 +103,3 @@ class TransitApp(App):
 # Running the application
 if __name__ == '__main__':
     TransitApp().run()
-
-
