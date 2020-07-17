@@ -1,6 +1,7 @@
 TransitionAppManagement:
     HomeScreen:
     CreateAccountScreen:
+    MainScreen:
     TransportationHistoryScreen:
     ItemDescriptionScreen:
 
@@ -37,7 +38,9 @@ TransitionAppManagement:
             text:"Sign in"
             background_color:(0,0,0,1)
             on_release:
-                root.signing_in()
+                #if( root.signing_in() ):
+                app.root.current = "Main"
+                root.manager.transition.direction = 'left'
         #verified
         Button:
             id: create_account
@@ -128,6 +131,27 @@ TransitionAppManagement:
             text:"Create!"
             background_color:(0,0,0,1)
 
+<MainScreen>:
+    name:"Main"
+    FloatLayout:
+        # Back button
+        Button:
+            id: go_back
+            text:"<"
+            font_size: 45
+            pos_hint:{"top":0.97,"x":0.061}
+            size_hint: 0.031,0.04
+            background_color:(0,0,0,0)
+            on_release:
+                app.root.current = "Home"
+                root.manager.transition.direction = 'right'
+        Label:
+            text: "test"
+            font_size: 17
+            size_hint: 0.5, 0.5
+            pos_hint: {"middle":0.2, "x":0.2}
+            color: (1, 0, 1, 1)
+
 <TransportationHistoryScreen>:
     name:"History"
     FloatLayout:
@@ -148,7 +172,7 @@ TransitionAppManagement:
             color: (0,0,0,1)
         #verified
         Button:
-            
+
             font_size: 15
             size_hint:0.69,0.11
             pos_hint:{"top":0.77,"x":0.16}
