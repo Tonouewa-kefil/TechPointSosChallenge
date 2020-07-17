@@ -1,10 +1,12 @@
 import kivy
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.core.window import Window
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from kivy.uix.widget import Widget
-from kivy.uix.button import Button
+from kivy.uix.button import Button, ButtonBehavior
+from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -12,12 +14,17 @@ from kivy.properties import ObjectProperty
 
 import sqlite3
 
-
-
 # Creating a database to keep the record of the UserInput
 connection = sqlite3.connect('Transit_User.db')
 cur = connection.cursor()
 connection.commit()
+
+# Set window size
+#   Pixel dimensions for a Samsung Galaxy S9 are 1440 x 2960,
+#   scaled window by a factor of 0.25 to get 360 x 740
+Window.size = (360, 740)
+#Config.set('graphics', 'width', '360')
+#Config.set('graphics', 'height', '740')
 
 # Username (TestInput)
 # Password (TestInput)
@@ -64,6 +71,9 @@ class CreateAccountScreen(Screen):
     pass
 
 class MainScreen(Screen):
+    pass
+
+class ImageButton(ButtonBehavior, Image):
     pass
 
 # Recently(Label)
