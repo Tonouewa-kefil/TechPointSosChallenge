@@ -145,12 +145,11 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "Home"
                 root.manager.transition.direction = 'right'
-        Label:
-            text: "test"
-            font_size: 17
-            size_hint: 0.5, 0.5
-            pos_hint: {"middle":0.2, "x":0.2}
-            color: (1, 0, 1, 1)
+        ImageButton:
+            source: "Media/pfp_peach.png"
+            pos_hint: {"center_x":0.5, "center_y":0.8}
+            size_hint: 0.3, 0.3
+            on_release: print( "hello" )
 
 <TransportationHistoryScreen>:
     name:"History"
