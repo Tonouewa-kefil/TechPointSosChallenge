@@ -2,6 +2,7 @@ TransitionAppManagement:
     HomeScreen:
     CreateAccountScreen:
     MainScreen:
+    ProfileScreen:
     TransportationHistoryScreen:
     ItemDescriptionScreen:
 
@@ -145,11 +146,80 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "Home"
                 root.manager.transition.direction = 'right'
+        # Profile Image / Button
         ImageButton:
-            source: "Media/pfp_peach.png"
-            pos_hint: {"center_x":0.5, "center_y":0.8}
+            pos_hint: { "center_x":0.5, "center_y":0.73 }
             size_hint: 0.3, 0.3
-            on_release: print( "hello" )
+            source: "Media/pfp_peach.png"
+            #canvas:
+            #    Ellipse:
+            #        source: "Media/pfp_peach.png"
+            #        pos: self.pos
+            on_release:
+                print( "Switching to profile screen..." )
+                app.root.current = "Profile"
+                root.manager.transition.direction = 'left'
+        # Lost and Found Image / Button
+        ImageButton:
+            pos_hint: { "center_x":0.2, "center_y":0.6 }
+            size_hint: 0.3, 0.3
+            canvas:
+                Ellipse:
+                    source: "Media/icon_lnf.png"
+                    pos: self.pos
+            on_release:
+                print( "Switching to LnF screen..." )
+                #app.root.current = "Profile"
+                #root.manager.transition.direction = 'left'
+        # Symptoms Image / Button
+        ImageButton:
+            pos_hint: { "center_x":0.8, "center_y":0.6 }
+            size_hint: 0.3, 0.3
+            canvas:
+                Ellipse:
+                    source: "Media/icon_symptoms.png"
+                    pos: self.pos
+            on_release:
+                print( "Switching to symptoms screen..." )
+                #app.root.current = "Profile"
+                #root.manager.transition.direction = 'left'
+        # Scanner Image / Button
+        ImageButton:
+            pos_hint: { "center_x":0.5, "center_y":0.4 }
+            size_hint: 0.3, 0.3
+            canvas:
+                Ellipse:
+                    source: "Media/icon_scanner.png"
+                    pos: self.pos
+            on_release:
+                print( "Switching to scanner screen..." )
+                #app.root.current = "Profile"
+                #root.manager.transition.direction = 'left'
+
+
+<ProfileScreen>:
+    name: "Profile"
+    FloatLayout:
+        # Back button
+        Button:
+            id: go_back
+            text:"<"
+            font_size: 45
+            pos_hint:{"top":0.97,"x":0.061}
+            size_hint: 0.031,0.04
+            background_color:(0,0,0,0)
+            on_release:
+                app.root.current = "Main"
+                root.manager.transition.direction = 'right'
+        # Profile Image
+        ImageButton:
+            pos_hint: { "center_x":0.5, "center_y":0.73 }
+            size_hint: 0.5, 0.5
+            source: "Media/pfp_peach.png"
+            #canvas:
+            #    Ellipse:
+            #        source: "Media/pfp_peach.png"
+            #        pos: self.pos
 
 <TransportationHistoryScreen>:
     name:"History"

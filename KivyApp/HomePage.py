@@ -73,6 +73,9 @@ class CreateAccountScreen(Screen):
 class MainScreen(Screen):
     pass
 
+class ProfileScreen(Screen):
+    pass
+
 class ImageButton(ButtonBehavior, Image):
     pass
 
