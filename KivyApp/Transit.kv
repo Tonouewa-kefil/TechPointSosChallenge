@@ -41,7 +41,7 @@ TransitionAppManagement:
             on_release:
                 #if( root.signing_in() ):
                 app.root.current = "Main"
-                root.manager.transition.direction = 'left'
+                root.manager.transition.direction = 'up'
         #verified
         Button:
             id: create_account
@@ -135,17 +135,6 @@ TransitionAppManagement:
 <MainScreen>:
     name:"Main"
     FloatLayout:
-        # Back button
-        Button:
-            id: go_back
-            text:"<"
-            font_size: 45
-            pos_hint:{"top":0.97,"x":0.061}
-            size_hint: 0.031,0.04
-            background_color:(0,0,0,0)
-            on_release:
-                app.root.current = "Home"
-                root.manager.transition.direction = 'right'
         # Profile Image / Button
         ImageButton:
             pos_hint: { "center_x":0.5, "center_y":0.73 }
@@ -216,6 +205,84 @@ TransitionAppManagement:
             pos_hint: { "center_x":0.5, "center_y":0.73 }
             size_hint: 0.5, 0.5
             source: "Media/pfp_peach.png"
+        # "Hello, [name]"
+        Label:
+            text: "Hello, user"
+            font_size: 25
+            pos_hint: { "center_x":0.5, "center_y":0.62 }
+            color: 1,1,1,1
+        # FloatLayout to contain Phone and Email information
+        FloatLayout:
+            size_hint: ( 1, 0.4 )
+            pos_hint: { "center_x":0.5, "center_y":0.5 }
+            # "Phone"
+            Label:
+                text: "Phone"
+                font_size: 18
+                pos_hint: { "center_x":0.16, "center_y":0.5 }
+            # Input for phone number
+            TextInput:
+                font_size: 16
+                size_hint: ( 0.6, 0.1 )
+                pos_hint:{ "center_x":0.56, "center_y":0.5 }
+                text:"Enter a phone number"
+                #on_focus: self.text = ""
+                multiline: False
+                input_type: 'tel'
+                write_tab: False
+                #on_text_validate: root.foo()
+            # "Email"
+            Label:
+                text: "Email"
+                font_size: 18
+                pos_hint: { "center_x":0.17, "center_y":0.35 }
+            # Input for email
+            TextInput:
+                font_size: 16
+                size_hint: ( 0.6, 0.1 )
+                pos_hint:{ "center_x":0.56, "center_y":0.35 }
+                text:"Enter an email"
+                #on_focus: self.text = ""
+                multiline: False
+                input_type: 'mail'
+                #on_text_validate: root.foo()
+        # Transportation History Button
+        Button:
+            size_hint: ( 0.6, 0.05 )
+            pos_hint: { "center_x":0.5, "center_y":0.3 }
+            text: "Transportation History"
+            font_size: 18
+            color: 0,0,0,1
+            background_normal: 'Media/asset.button_normal.png'
+            on_release:
+                print( "Switching to transportation history screen..." )
+                app.root.current = "History"
+                root.manager.transition.direction = 'left'
+        # Symptom History Button
+        Button:
+            size_hint: ( 0.6, 0.05 )
+            pos_hint: { "center_x":0.5, "center_y":0.23 }
+            text: "Symptom History"
+            font_size: 18
+            color: 0,0,0,1
+            background_normal: 'Media/asset.button_normal.png'
+            #on_release:
+            #    print( "Switching to symptom history screen..." )
+            #    app.root.current = ""
+            #    root.manager.transition.direction = 'left'
+        # Sign out Button, leads to the login page
+        Button:
+            size_hint: ( 0.4, 0.04 )
+            pos_hint: { "center_x":0.5, "center_y":0.1 }
+            text: "Sign Out"
+            font_size: 14
+            color: 0,0,0,1
+            background_normal: 'Media/asset.button_warning.png'
+            on_release:
+                print( "Switching to login screen..." )
+                app.root.current = "Home"
+                root.manager.transition.direction = 'down'
+
 
 <TransportationHistoryScreen>:
     name:"History"
@@ -228,6 +295,10 @@ TransitionAppManagement:
             pos_hint:{"top":0.97,"x":0.061}
             size_hint: 0.031,0.04
             background_color:(0,0,0,0)
+            on_release:
+                print( "Switching to main screen..." )
+                app.root.current = "Main"
+                root.manager.transition.direction = 'right'
         #verified
         Label:
             text:"Recently Used Transportation"

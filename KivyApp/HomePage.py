@@ -76,9 +76,6 @@ class MainScreen(Screen):
 class ProfileScreen(Screen):
     pass
 
-class ImageButton(ButtonBehavior, Image):
-    pass
-
 # Recently(Label)
 # 3 Buttons listing the transport
 # See more button
@@ -93,14 +90,14 @@ class TransportationHistoryScreen(Screen):
 # SMS Text(Button)
 # Phone Call(Button)
 # Email(Button)
-
 class ItemDescriptionScreen(Screen):
     pass
 
 class TransitionAppManagement(ScreenManager):
     pass
 
-
+class ImageButton(ButtonBehavior, Image):
+    pass
 
 # Loading the Kivy file
 kv = Builder.load_file("Transit.kv")
