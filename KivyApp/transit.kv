@@ -18,9 +18,7 @@ TransitionAppManagement:
     create_account: create_account
     authentification_status: authentification_status
 
-
     FloatLayout:
-        #verified
         TextInput:
             id: username
             font_size: root.height * 0.025
@@ -28,13 +26,13 @@ TransitionAppManagement:
             pos_hint:{"top":0.72,"x":0.255}
             text:"Username"
             multiline: False
-        #verified
         TextInput:
             id: password
             font_size: root.height * 0.025
             size_hint: 0.504,0.05
             pos_hint:{"top":0.63,"x":0.255}
             text:"Password"
+            on_focus:self.text = ""
             multiline: False
         Label:
             id: authentification_status
@@ -44,7 +42,6 @@ TransitionAppManagement:
             pos_hint:{"top":0.50,"x":0.255}
             text:""
             multiline: False
-        #verified
         Button:
             id: sign_in
             font_size: 13
@@ -56,7 +53,6 @@ TransitionAppManagement:
                 if root.signing_in() == True:\
                 app.root.current = "Main"
                 root.manager.transition.direction = 'up'
-        #verified
         Button:
             id: create_account
             font_size: root.height * 0.025
@@ -77,7 +73,6 @@ TransitionAppManagement:
     create: create
 
     FloatLayout:
-        #verified
         # Back button
         ImageButton:
             id:go_back
@@ -87,7 +82,6 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "Home"
                 root.manager.transition.direction = 'right'
-        #verified
         Label:
             text:"Welcome!"
             font_size: 30
@@ -96,7 +90,6 @@ TransitionAppManagement:
             halign: 'center'
             valign: 'middle'
             color: (0,0,0,1)
-        #verified
         Label:
             text:"Thanks for helping to \n keep transportation in our city safe"
             font_size: 15
@@ -105,14 +98,12 @@ TransitionAppManagement:
             halign: 'center'
             valign: 'middle'
             color: (0,0,0,1)
-        #verified
         Label:
             text:"Let's get your Account set up..."
             font_size: 17
             size_hint: 0.61,0.04
             pos_hint:{"top":0.53,"x":0.193}
             color: (0,0,0,1)
-        #verified
         TextInput:
             id: username
             font_size: root.height * 0.025
@@ -120,7 +111,6 @@ TransitionAppManagement:
             pos_hint:{"top":0.38,"x":0.22}
             text:"Username"
             multiline: False
-        #verified
         TextInput:
             id: password
             font_size: root.height * 0.025
@@ -128,7 +118,6 @@ TransitionAppManagement:
             pos_hint:{"top":0.31,"x":0.22}
             text:"Password"
             multiline: False
-        #verified
         TextInput:
             id: confirmation
             font_size: root.height * 0.025
@@ -136,7 +125,6 @@ TransitionAppManagement:
             pos_hint:{"top":0.24,"x":0.22}
             text:"Confirm Password"
             multiline: False
-        #verified
         Button:
             id: create
             font_size: 17
@@ -153,59 +141,48 @@ TransitionAppManagement:
 <MainScreen>:
     name:"Main"
     FloatLayout:
-        # Profile Image / Button
+    # Profile Image / Button
         ImageButton:
-            pos_hint: { "center_x":0.5, "center_y":0.73 }
-            size_hint: 0.3, 0.3
+            pos_hint: { "top":0.8996, "x":0.2853 }
+            size_hint: 0.4267, 0.24
             source: "Media/pfp_peach.png"
-            #canvas:
-            #    Ellipse:
-            #        source: "Media/pfp_peach.png"
-            #        pos: self.pos
             on_release:
                 print( "Switching to profile screen..." )
                 app.root.current = "Profile"
                 root.manager.transition.direction = 'left'
         # Lost and Found Image / Button
         ImageButton:
-            pos_hint: { "center_x":0.2, "center_y":0.6 }
-            size_hint: 0.3, 0.3
-            canvas:
-                Ellipse:
-                    source: "Media/icon_lnf.png"
-                    pos: self.pos
+            pos_hint: { "top":0.585, "x":0.0853 }
+            size_hint: 0.231, 0.13
+            source: "Media/icon_lnf.png"
             on_release:
                 print( "Switching to LnF screen..." )
                 app.root.current = "History"
-                #root.manager.transition.direction = 'right'
+                root.manager.transition.direction = 'left'
         # Symptoms Image / Button
         ImageButton:
-            pos_hint: { "center_x":0.8, "center_y":0.6 }
-            size_hint: 0.3, 0.3
-            canvas:
-                Ellipse:
-                    source: "Media/icon_symptoms.png"
-                    pos: self.pos
+            pos_hint: { "top":0.585, "x":0.71 }
+            size_hint: 0.231, 0.13
+            source: "Media/icon_symptoms.png"
             on_release:
                 print( "Switching to symptoms screen..." )
                 #app.root.current = "Profile"
                 #root.manager.transition.direction = 'left'
         # Scanner Image / Button
         ImageButton:
-            pos_hint: { "center_x":0.5, "center_y":0.4 }
-            size_hint: 0.3, 0.3
-            canvas:
-                Ellipse:
-                    source: "Media/icon_scanner.png"
-                    pos: self.pos
+            pos_hint: {"top":0.222, "x":0.0853}
+            size_hint: 0.231, 0.13
+            source: "Media/icon_scanner.png"
             on_release:
                 print( "Switching to scanner screen..." )
                 app.root.current = "Scan"
                 root.manager.transition.direction = 'left'
 
-
 <ProfileScreen>:
     name: "Profile"
+    #Greetings: Greetings
+    #UserPhoneNumber: UserPhoneNumber
+
     FloatLayout:
         # Back button
         ImageButton:
@@ -216,67 +193,75 @@ TransitionAppManagement:
                 app.root.current = "Main"
                 root.manager.transition.direction = 'right'
         # Profile Image
-        ImageButton:
-            pos_hint: { "center_x":0.5, "center_y":0.73 }
-            size_hint: 0.5, 0.5
+        Image:
+            pos_hint: { "top":0.90, "x":0.29 }
+            size_hint: 0.427, 0.24
             source: "Media/pfp_peach.png"
         # "Hello, [name]"
         Label:
+            id: Greetings
             text: "Hello there!"
-            font_size: 25
-            pos_hint: { "center_x":0.5, "center_y":0.62 }
-            color: 1,1,1,1
-        # FloatLayout to contain Phone and Email information
-        FloatLayout:
-            size_hint: ( 1, 0.4 )
-            pos_hint: { "center_x":0.5, "center_y":0.5 }
-            # "Phone"
-            Label:
-                text: "Phone"
-                font_size: 18
-                pos_hint: { "center_x":0.16, "center_y":0.5 }
-            # Input for phone number
-            TextInput:
-                font_size: 16
-                size_hint: ( 0.6, 0.1 )
-                pos_hint:{ "center_x":0.56, "center_y":0.5 }
-                text:"Enter a phone number"
-                #on_focus: self.text = ""
-                multiline: False
-                input_type: 'tel'
-                write_tab: False
-                #on_text_validate: root.foo()
-            # "Email"
-            Label:
-                text: "Email"
-                font_size: 18
-                pos_hint: { "center_x":0.17, "center_y":0.35 }
-            # Input for email
-            TextInput:
-                font_size: 16
-                size_hint: ( 0.6, 0.1 )
-                pos_hint:{ "center_x":0.56, "center_y":0.35 }
-                text:"Enter an email"
-                #on_focus: self.text = ""
-                multiline: False
-                input_type: 'mail'
-                #on_text_validate: root.foo()
+            font_size: 20
+            pos_hint: { "top":0.64, "x":0.18 }
+            size_hint:0.63,0.036
+            halign: 'center'
+            valign: 'middle'
+            color: 0,0,0,1
+        Label:
+            text: "Phone:"
+            font_size: 18
+            pos_hint: {"top":0.55, "x":0.123 }
+            size_hint:0.1627,0.036
+            halign: 'center'
+            valign: 'middle'
+            color: 0,0,0,1
+        # Input for phone number
+        TextInput:
+            id:UserPhoneNumber
+            font_size: 16
+            pos_hint: { "top":0.56, "x":0.30 }
+            size_hint:0.536,0.06147
+            text:"Enter a phone number"
+            #on_focus: self.text = ""
+            multiline: False
+            input_type: 'tel'
+            write_tab: False
+            #on_text_validate: root.foo()
+        # "Email"
+        Label:
+            text: "Email:"
+            font_size: 18
+            pos_hint: {"top":0.456, "x":0.123 }
+            size_hint:0.1627,0.036
+            halign: 'center'
+            valign: 'middle'
+            color:0,0,0,1
+        # Input for email
+        TextInput:
+            id:UserEmail
+            font_size: 16
+            pos_hint: { "top":0.471, "x":0.30 }
+            size_hint:0.536,0.06147
+            text:"Enter an email"
+            #on_focus: self.text = ""
+            multiline: False
+            input_type: 'mail'
+            #on_text_validate: root.foo()
         # Transportation History Button
         Button:
-            size_hint: ( 0.6, 0.05 )
-            pos_hint: { "center_x":0.5, "center_y":0.3 }
+            size_hint: ( 0.723, 0.05 )
+            pos_hint: { "top":0.294, "x":0.123 }
             text: "Transportation History"
             font_size: 18
             color: 0,0,0,1
             background_normal: 'Media/asset.button_normal.png'
             on_release:
-                print( "Switching to transportation history screen..." )
                 app.root.current = "History"
                 root.manager.transition.direction = 'left'
         # Symptom History Button
         Button:
-            size_hint: ( 0.6, 0.05 )
-            pos_hint: { "center_x":0.5, "center_y":0.23 }
+            size_hint: ( 0.723, 0.05 )
+            pos_hint: { "top":0.21, "x":0.123 }
             text: "Symptom History"
             font_size: 18
             color: 0,0,0,1
@@ -294,14 +279,12 @@ TransitionAppManagement:
             color: 0,0,0,1
             background_normal: 'Media/asset.button_warning.png'
             on_release:
-                print( "Switching to login screen..." )
                 app.root.current = "Home"
                 root.manager.transition.direction = 'down'
 
 <TransportationHistoryScreen>:
     name:"History"
     FloatLayout:
-        #verified
         # Back button
         ImageButton:
             pos_hint:{"top":0.97,"x":0.0613}
@@ -310,14 +293,12 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "Main"
                 root.manager.transition.direction = 'right'
-        #verified
         Label:
             text:"Recently Used Transportation"
             font_size: 25
             size_hint:0.88,0.045
             pos_hint:{"top":0.89,"x":0.06}
             color: (0,0,0,1)
-        #verified
         Button:
             font_size: 15
             size_hint:0.69,0.11
@@ -328,7 +309,6 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "LostItem"
                 root.manager.transition.direction = 'left'
-        #verified
         Button:
             font_size: 15
             size_hint:0.69,0.11
@@ -339,7 +319,6 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "LostItem"
                 root.manager.transition.direction = 'left'
-        #verified
         Button:
             font_size: 15
             size_hint:0.69,0.11
@@ -350,13 +329,11 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "LostItem"
                 root.manager.transition.direction = 'left'
-        #verified
         Button:
             text:"See more ..."
             size_hint:0.35,0.0435
             pos_hint:{"top":0.21,"x":0.33}
             background_color: (0,0,0,1)
-        #verified
         Label:
             text:"If you lost an Item, select the \n transportation to fill a claim"
             size_hint:0.483,0.051
@@ -367,7 +344,6 @@ TransitionAppManagement:
 <ItemDescriptionScreen>:
     name:"LostItem"
     FloatLayout:
-        #verified
         # Back button
         ImageButton:
             pos_hint:{"top":0.97,"x":0.0613}
@@ -376,40 +352,34 @@ TransitionAppManagement:
             on_release:
                 app.root.current = "History"
                 root.manager.transition.direction = 'right'
-        #verified
         Label:
             text:"Describe your Lost Item"
             font_size: 25
             size_hint:0.70,0.045
             pos_hint:{"top":0.89,"x":0.15}
-        #verified
         TextInput:
             text:""
             font_size: 15
             size_hint:0.88,0.31
             pos_hint:{"top":0.81,"x":0.0613}
             multiline: True
-        #verified
         Label:
             text:"Best way to contact you?"
             size_hint:0.59,0.081
             pos_hint:{"top":0.4423,"x":0.0613}
             font_size: 20
-        #verified
         Button:
             text:"SMS Text"
             size_hint:0.40,0.048
             pos_hint:{"top":0.36,"x":0.0613}
             font_size: 20
             background_color:(0,0,0,1)
-        #verified
         Button:
             text:"Phone Call"
             size_hint:0.40,0.048
             pos_hint:{"top":0.26,"x":0.0613}
             font_call: 20
             background_color:(0,0,0,1)
-        #verified
         Button:
             text:"Email"
             size_hint:0.40,0.048
