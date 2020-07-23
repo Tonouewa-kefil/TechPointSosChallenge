@@ -9,10 +9,11 @@ TransitionAppManagement:
     TransportationHistoryScreen:
     ItemDescriptionScreen:
     ScannerScreen:
-
+    SymptomsScreen:
+    SymptomsHistoryScreen
 <HomeScreen>:
     name:"Home"
-    username: username
+    email: email
     password: password
     sign_in:  sign_in
     create_account: create_account
@@ -20,11 +21,11 @@ TransitionAppManagement:
 
     FloatLayout:
         TextInput:
-            id: username
+            id: email
             font_size: root.height * 0.025
             size_hint: 0.504,0.05
             pos_hint:{"top":0.72,"x":0.255}
-            text:"Username"
+            text:"Email"
             multiline: False
         TextInput:
             id: password
@@ -32,7 +33,6 @@ TransitionAppManagement:
             size_hint: 0.504,0.05
             pos_hint:{"top":0.63,"x":0.255}
             text:"Password"
-            on_focus:self.text = ""
             multiline: False
         Label:
             id: authentification_status
@@ -40,7 +40,10 @@ TransitionAppManagement:
             color:(1,0,0,1)
             size_hint: 0.504,0.05
             pos_hint:{"top":0.50,"x":0.255}
+            halign: 'center'
+            valign: 'middle'
             text:""
+            font_size: 13
             multiline: False
         Button:
             id: sign_in
@@ -67,10 +70,12 @@ TransitionAppManagement:
 <CreateAccountScreen>:
     name:"Create"
     go_back: go_back
-    username: username
+    email: email
     password: password
     confirmation: confirmation
     create: create
+    isFieldBlanked: isFieldBlanked
+
 
     FloatLayout:
         # Back button
@@ -105,11 +110,11 @@ TransitionAppManagement:
             pos_hint:{"top":0.53,"x":0.193}
             color: (0,0,0,1)
         TextInput:
-            id: username
+            id: email
             font_size: root.height * 0.025
             size_hint:0.504,0.05
             pos_hint:{"top":0.38,"x":0.22}
-            text:"Username"
+            text:"Email"
             multiline: False
         TextInput:
             id: password
@@ -136,6 +141,17 @@ TransitionAppManagement:
                 if root.NewAccountCreation() == True:\
                 app.root.current = "Home"
                 root.manager.transition.direction = 'right'
+        Label:
+            id: isFieldBlanked
+            font_size: root.height * 0.015
+            color:(1,0,0,1)
+            size_hint: 0.504,0.05
+            pos_hint:{"top":0.10,"x":0.23}
+            halign: 'center'
+            valign: 'middle'
+            text:""
+            font_size: 13
+            multiline: False
 
 
 <MainScreen>:
@@ -150,6 +166,16 @@ TransitionAppManagement:
                 print( "Switching to profile screen..." )
                 app.root.current = "Profile"
                 root.manager.transition.direction = 'left'
+
+        Label:
+            pos_hint:{"top":0.92,"x":0.387}
+            size_hint:0.2053,0.0345
+            text:"Profile"
+            halign: 'center'
+            valign: 'middle'
+            font_size:20
+            color:0,0,0,1
+
         # Lost and Found Image / Button
         ImageButton:
             pos_hint: { "top":0.585, "x":0.0853 }
@@ -159,6 +185,13 @@ TransitionAppManagement:
                 print( "Switching to LnF screen..." )
                 app.root.current = "History"
                 root.manager.transition.direction = 'left'
+        # Lost and Found/ Label
+        Label:
+            pos_hint: { "top":0.4543, "x":0.0987 }
+            size_hint:0.2053,0.0345
+            text:"Lost & Found"
+            color:0,0,0,1
+
         # Symptoms Image / Button
         ImageButton:
             pos_hint: { "top":0.585, "x":0.71 }
@@ -166,22 +199,34 @@ TransitionAppManagement:
             source: "Media/icon_symptoms.png"
             on_release:
                 print( "Switching to symptoms screen..." )
-                #app.root.current = "Profile"
-                #root.manager.transition.direction = 'left'
+                app.root.current = "Symptoms"
+                root.manager.transition.direction = 'left'
+        Label:
+            pos_hint:{"top":0.453,"x":0.723 }
+            size_hint:0.2053,0.0345
+            text:"Symptoms Quiz"
+            color:0,0,0,1
+
         # Scanner Image / Button
         ImageButton:
-            pos_hint: {"top":0.222, "x":0.0853}
+            pos_hint: {"top":0.222,"x":0.387}
             size_hint: 0.231, 0.13
             source: "Media/icon_scanner.png"
             on_release:
                 print( "Switching to scanner screen..." )
                 app.root.current = "Scan"
                 root.manager.transition.direction = 'left'
+        Label:
+            pos_hint:{"top":0.092 ,"x":0.387}
+            size_hint:0.2053,0.0345
+            text:"QR Scan"
+            color:0,0,0,1
 
 <ProfileScreen>:
     name: "Profile"
-    #Greetings: Greetings
-    #UserPhoneNumber: UserPhoneNumber
+    greetings: greetings
+    userPhoneNumber: userPhoneNumber
+    userEmail: userEmail
 
     FloatLayout:
         # Back button
@@ -194,15 +239,15 @@ TransitionAppManagement:
                 root.manager.transition.direction = 'right'
         # Profile Image
         Image:
-            pos_hint: { "top":0.90, "x":0.29 }
+            pos_hint: {"top":0.90, "x":0.29 }
             size_hint: 0.427, 0.24
             source: "Media/pfp_peach.png"
         # "Hello, [name]"
         Label:
-            id: Greetings
-            text: "Hello there!"
-            font_size: 20
-            pos_hint: { "top":0.64, "x":0.18 }
+            id: greetings
+            text: "Hello, there!"
+            font_size: 25
+            pos_hint: {"top":0.66, "x":0.18 }
             size_hint:0.63,0.036
             halign: 'center'
             valign: 'middle'
@@ -210,17 +255,17 @@ TransitionAppManagement:
         Label:
             text: "Phone:"
             font_size: 18
-            pos_hint: {"top":0.55, "x":0.123 }
+            pos_hint: {"top":0.555, "x":0.123 }
             size_hint:0.1627,0.036
             halign: 'center'
             valign: 'middle'
             color: 0,0,0,1
         # Input for phone number
         TextInput:
-            id:UserPhoneNumber
+            id:userPhoneNumber
             font_size: 16
             pos_hint: { "top":0.56, "x":0.30 }
-            size_hint:0.536,0.06147
+            size_hint:0.536,0.050
             text:"Enter a phone number"
             #on_focus: self.text = ""
             multiline: False
@@ -231,17 +276,17 @@ TransitionAppManagement:
         Label:
             text: "Email:"
             font_size: 18
-            pos_hint: {"top":0.456, "x":0.123 }
+            pos_hint: {"top":0.465, "x":0.123 }
             size_hint:0.1627,0.036
             halign: 'center'
             valign: 'middle'
             color:0,0,0,1
         # Input for email
         TextInput:
-            id:UserEmail
+            id:userEmail
             font_size: 16
             pos_hint: { "top":0.471, "x":0.30 }
-            size_hint:0.536,0.06147
+            size_hint:0.536,0.050
             text:"Enter an email"
             #on_focus: self.text = ""
             multiline: False
@@ -266,10 +311,10 @@ TransitionAppManagement:
             font_size: 18
             color: 0,0,0,1
             background_normal: 'Media/asset.button_normal.png'
-            #on_release:
-            #    print( "Switching to symptom history screen..." )
-            #    app.root.current = ""
-            #    root.manager.transition.direction = 'left'
+            on_release:
+                print( "Switching to symptom history screen..." )
+                app.root.current = "symptomsHistory"
+                root.manager.transition.direction = 'left'
         # Sign out Button, leads to the login page
         Button:
             size_hint: ( 0.4, 0.04 )
@@ -433,3 +478,204 @@ TransitionAppManagement:
             halign: 'center'
             valign: 'middle'
             font_size:20
+
+<symptoms>:
+    sym1: Fever
+    sym2: Cough
+    sym3: Sore_throat
+    sym4: Soreness
+    sym5: Shortness_of_breath
+    sym6: Loss_of_smell_or_taste
+    submit: Submit
+
+    GridLayout:
+        cols:2
+
+        CheckBox:
+            id: Fever
+            color:.294, .761, .623
+            on_active: root.checkbox_click(self, self.active)
+            size_hint_x: .20
+        Label:
+            text: "Fever "
+
+        CheckBox:
+            id: Cough
+            on_active: root.checkbox_click(self, self.active)
+            size_hint_x: .20
+        Label:
+            text: "Cough "
+
+        CheckBox:
+            id: Sore_throat
+            on_active: root.checkbox_click(self, self.active)
+            size_hint_x: .20
+        Label:
+            text: "Sore throat "
+
+        CheckBox:
+            id: Soreness
+            color:.294, .761, .623
+            on_active: root.checkbox_click(self, self.active)
+            size_hint_x: .20
+        Label:
+            text: "Soreness "
+
+        CheckBox:
+            id: Shortness_of_breath
+            on_active: root.checkbox_click(self, self.active)
+            size_hint_x: .20
+        Label:
+            text: "Shortness of breath "
+
+        CheckBox:
+            id: Loss_of_smell_or_taste
+            on_active: root.checkbox_click(self, self.active)
+            size_hint_x: .20
+        Label:
+            text: "Loss of smell or taste "
+
+
+
+
+<SymptomsScreen>:
+    name: "Symptoms"
+    go_back: go_back
+    sym1: Fever
+    sym2: Cough
+    sym3: Sore_throat
+    sym4: Soreness
+    sym5: Shortness_of_breath
+    sym6: Loss_of_smell_or_taste
+    submit: Submit
+    FloatLayout:
+        # Back button
+        ImageButton:
+            id:go_back
+            pos_hint:{"top":0.97,"x":0.0613}
+            size_hint: 0.035,0.033
+            source: "Media/PngItem_2022960.png"
+            on_release:
+                app.root.current = "Profile"
+                root.manager.transition.direction = 'right'
+        Label:
+            text: "Have you had any of these Symptoms \n in the last 24hrs?"
+            font_size: 17
+            size_hint: 0.93,0.060
+            pos_hint:{"top":0.88,"x":0.033}
+            halign: 'center'
+            valign: 'middle'
+            color: (0,0,0,1)
+
+        GridLayout:
+            cols:2
+            size: root.width * 0.8,root.height * 0.8
+            row_default_height: 70
+            row_force_default: True
+            pos_hint:{"top":0.80,"x":0}
+
+
+            CheckBox:
+                id: Fever
+                color:0,0,0,1
+                #pos_hint:{"y":0.79,"x":0.2}
+
+            Label:
+                text: "Fever "
+                color:0,0,0,1
+            CheckBox:
+                id: Cough
+                color:0,0,0,1
+                #pos_hint:{"y":0.64,"x":0.2}
+            Label:
+                text: "Cough "
+                color:0,0,0,1
+            CheckBox:
+                id: Sore_throat
+                color:0,0,0,1
+                #pos_hint:{"top":0.49,"x":0.2}
+            Label:
+                text: "Sore throat "
+                color:0,0,0,1
+            CheckBox:
+                id: Soreness
+                color:0,0,0,1
+                #pos_hint:{"top":0.34,"x":0.2}
+            Label:
+                text: "Soreness "
+                color:0,0,0,1
+            CheckBox:
+                id: Shortness_of_breath
+                color:0,0,0,1
+                #pos_hint:{"top":0.19,"x":0.2}
+            Label:
+                text: "Shortness of breath "
+                color:0,0,0,1
+
+            CheckBox:
+                id: Loss_of_smell_or_taste
+                color:0,0,0,1
+                #pos_hint:{"top":0.04,"x":0.2}
+            Label:
+                text: "Loss of smell or taste "
+                color:0,0,0,1
+        Button:
+            id: Submit
+            text:"Submit"
+            size_hint:0.27,0.0435
+            pos_hint:{"top":0.133,"x":0.367}
+            on_release:
+                root.insert_data_into_db()
+                app.root.current = "symptomsHistory"
+                root.manager.transition.direction = 'right'
+
+
+<SymptomsHistoryScreen>:
+    name:"symptomsHistory"
+    ob1: ob1
+    ob2: ob2
+
+    FloatLayout:
+    # Back button
+        ImageButton:
+            id:go_back
+            pos_hint:{"top":0.97,"x":0.0613}
+            size_hint: 0.035,0.033
+            source: "Media/PngItem_2022960.png"
+            on_release:
+                app.root.current = "Profile"
+                root.manager.transition.direction = 'right'
+        Label:
+            id: ob1
+            text:"Recently Reported Symptoms"
+            size_hint:0.88,0.045
+            pos_hint:{"top":0.89,"x":0.06}
+            font_size: 25
+            color: (0,0,0,1)
+        Label:
+            id: ob2
+            font_size: 15
+            size_hint:0.69,0.11
+            pos_hint:{"top":0.77,"x":0.16}
+            text:"Your syptoms are x, t, z"
+            background_normal:''
+            background_color:(1,1,1,1)
+        Label:
+            font_size: 15
+            size_hint:0.69,0.11
+            pos_hint:{"top":0.573,"x":0.16}
+            text:"Your syptoms are x, t, z"
+            background_normal:'blue'
+            background_color:(1,1,1,1)
+        Label:
+            font_size: 15
+            size_hint:0.69,0.11
+            pos_hint:{"top":0.384,"x":0.16}
+            text:"Your syptoms are x, t, z"
+            background_normal:''
+            background_color:(1,1,1,1)
+        Button:
+            text:"See more ..."
+            size_hint:0.35,0.0435
+            pos_hint:{"top":0.21,"x":0.33}
+            background_color: (0,0,0,1)
