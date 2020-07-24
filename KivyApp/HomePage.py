@@ -18,8 +18,11 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty
 import mysql.connector
 from kivy.uix.checkbox import CheckBox
-import time
-global The_user
+from kivy.properties import StringProperty
+from datetime import date
+
+The_user_email = ""
+List_of_Symptoms = []
 
 
 # Creating a database to keep the record of the UserInput
@@ -30,11 +33,22 @@ UserDataBase = mysql.connector.connect(
     database="IndyRiderProfile"
 )
 mycursor = UserDataBase.cursor()
+#mycursor.execute("CREATE TABLE Riders(email VARCHAR(255), password VARCHAR(255), symptomsHistory LONGTEXT, "
+                 #"transitHistory LONGTEXT)")
+
 # This query will help us insert the username and the password into the database
-InsetionFormula = "INSERT INTO riders (email, password) VALUE(%s,%s)"
+InsetionFormula = "INSERT INTO Riders (email, password, symptomsHistory, transitHistory) VALUE(%s,%s,%s,%s)"
 
 # This query will help us while searching for the username and the corresponding password in our database
 SearchFormula = "SELECT * FROM riders WHERE email = %s"
+
+# This query will help us insert the symptoms into the database
+SymptomsInsertionFormula = "UPDATE Riders SET  symptomsHistory = %s WHERE email = %s"
+
+
+# This query will help us insert the transit into the database
+TransitInsertionFormula = "UPDATE Riders SET  transitHistory = %s WHERE email = %s"
+
 
 # Set window size
 #   Pixel dimensions for a Samsung Galaxy S9 are 1440 x 2960,
@@ -53,6 +67,7 @@ class HomeScreen(Screen):
     create_account = ObjectProperty(None)
     authentification_status = ObjectProperty(None)
 
+
     def signing_in(self):
         # here we want to verify the record in our database
         # if it exist, we take the user to his profile
@@ -65,6 +80,8 @@ class HomeScreen(Screen):
             return False
         else:
             if user[1] == self.password.text:
+                global The_user_email
+                The_user_email = user[0]
                 self.authentification_status.text = " "
                 return True
             else:
@@ -96,7 +113,7 @@ class CreateAccountScreen(Screen):
         # if credentials are good, we show the user profile.
         if self.email.text != "" and self.password.text != "" and self.confirmation.text != "":
             if self.password.text == self.confirmation.text:
-                NewUser = (self.email.text,self.password.text)
+                NewUser = (self.email.text,self.password.text,"","")
                 mycursor.execute(InsetionFormula,NewUser)
                 UserDataBase.commit()
                 self.email.text = "Email"
@@ -109,6 +126,7 @@ class CreateAccountScreen(Screen):
         else:
             self.isFieldBlanked.text = "Fill the blank field(s)"
             return False
+
     pass
 
 class MainScreen(Screen):
@@ -117,6 +135,8 @@ class MainScreen(Screen):
 class ProfileScreen(Screen):
     greetings: ObjectProperty(None)
     userPhoneNumber: ObjectProperty(None)
+    userEmail: ObjectProperty(None)
+
     pass
 
 class ScannerScreen(Screen):
@@ -142,35 +162,67 @@ class TransportationHistoryScreen(Screen):
 # Email(Button)
 
 class ItemDescriptionScreen(Screen):
+    smsText: ObjectProperty(None)
+    phoneCall: ObjectProperty(None)
+    email: ObjectProperty(None)
+
+
     pass
 
 
 class SymptomsScreen(Screen):
-    sym1 : ObjectProperty(None)
-    sym2 : ObjectProperty(None)
-    sym3 : ObjectProperty(None)
-    sym4 : ObjectProperty(None)
-    sym5 : ObjectProperty(None)
-    sym6 : ObjectProperty(None)
-    symptomsList = []
+    sym1: ObjectProperty(None)
+    sym2: ObjectProperty(None)
+    sym3: ObjectProperty(None)
+    sym4: ObjectProperty(None)
+    sym5: ObjectProperty(None)
+    sym6: ObjectProperty(None)
+    symptomsList = ''
 
     def insert_data_into_db(self):
-        if self.sym1.active:
-            self.symptomsList.append('Fever')
-        if self.sym2.active:
-            self.symptomsList.append('Cough')
-        if self.sym3.active:
-            self.symptomsList.append('Sore Throat')
-        if self.sym4.active:
-            self.symptomsList.append('Soreness')
-        if self.sym5.active:
-            self.symptomsList.append('Shortness of breath')
-        if self.sym6.active:
-            self.symptomsList.append('Loss of smell and/or taste')
+        global The_user_email
+        # get the date
+        today = date.today()
 
+        self.symptomsList = 'Date: ' + str(today) + '\n'
+        self.symptomsList = self.symptomsList + 'Symptoms Recorded: '
+        if self.sym1.active:
+            self.symptomsList = (self.symptomsList + 'Fever,')
+        if self.sym2.active:
+            self.symptomsList = (self.symptomsList + ' Cough,')
+        if self.sym3.active:
+            self.symptomsList = (self.symptomsList + ' Sore Throat,')
+        if self.sym4.active:
+            self.symptomsList = (self.symptomsList + ' Soreness,')
+        if self.sym5.active:
+            self.symptomsList = (self.symptomsList + ' Shortness of breath,')
+        if self.sym6.active:
+            self.symptomsList = (self.symptomsList + ' Loss of smell and/or taste,')
+        self.symptomsList = self.symptomsList + '+ ' + '\n'
+
+        # Time to put it into the data base
+        # first get the present data
+        mycursor.execute(SearchFormula, (The_user_email,))
+        userInfo = mycursor.fetchone()
+        Present_symptoms_history = userInfo[2]
+        Updated_symptoms_history = str(Present_symptoms_history) + self.symptomsList
+        mycursor.execute(SymptomsInsertionFormula, (Updated_symptoms_history, The_user_email,))
+        UserDataBase.commit()
+
+
+    def display_Symptoms(self):
+        global The_user_email
+        global List_of_Symptoms
+        mycursor.execute(SearchFormula, (The_user_email,))
+        userInfo = mycursor.fetchone()
+        Present_symptoms_history = userInfo[2]
+        List_of_Symptoms = Present_symptoms_history.split(',+ \n')
     pass
 
 class SymptomsHistoryScreen(Screen):
+    ob1: ObjectProperty(None)
+    ob2: ObjectProperty(None)
+    ob3: ObjectProperty(None)
     pass
 
 class TransitionAppManagement(ScreenManager):
